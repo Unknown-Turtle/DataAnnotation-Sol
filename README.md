@@ -1,46 +1,74 @@
-# Grid Character Printer
+# Data Annotation Solution
 
-This Python script takes coordinate and character data and prints a grid of characters that forms a message made of uppercase letters.
+This project provides a solution for reading coordinate-based character data from a Google Doc and displaying it as a grid. When displayed in a fixed-width font, the characters form a graphic showing uppercase letters, which is the secret message.
+
+## Project Structure
+
+- `message_decoder.py` - Main script that retrieves and parses data from a Google Doc URL, and prints the resulting grid of characters
+- `requirements.txt` - Lists the required Python packages
+- `.gitignore` - Specifies files and directories to be ignored by Git
+
+## Setup
+
+1. Clone this repository
+2. Create and activate a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install the required packages:
+   ```
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
-The script provides a `process_coordinates()` function that takes a list of coordinate data and prints the resulting grid. Each coordinate is specified as a tuple of (x, y, character).
+Run the script with a Google Doc URL:
 
-```python
-from grid_printer import process_coordinates
-
-# Example data
-data = [
-    (0, 0, '█'),  # (x, y, character)
-    (0, 1, '█'),
-    (0, 2, '█'),
-    (1, 1, '█'),
-    (1, 2, '█'),
-    (2, 1, '█'),
-    (2, 2, '█'),
-    (3, 2, '█')
-]
-
-process_coordinates(data)
+```
+python decoder_solution.py <google_doc_url>
 ```
 
-The script will print the grid of characters, revealing the hidden message.
+### Authentication
 
-## Example Output
-
-For the example input data above, the output will be:
-```
-█▀▀▀
-█▀▀ 
-█   
-```
-
-This forms the letter 'F'.
+The script uses OAuth2 for Google Docs API authentication:
+- On first run, it will prompt you to authorize access
+- Credentials will be saved to `token.pickle` for future use
+- You'll need a `credentials.json` file from the Google API Console
 
 ## How it Works
 
-1. The script takes a list of (x, y, character) coordinates
-2. Creates a grid large enough to fit all coordinates
-3. Places each character at its specified position
-4. Fills empty positions with spaces
-5. Prints the resulting grid 
+1. The script extracts the document ID from the provided Google Doc URL
+2. It retrieves the document content using the Google Docs API
+3. Parses the document to extract coordinate-based character data
+4. Creates a grid and places each character at its specified position
+5. Prints the resulting grid, revealing the hidden message
+
+## Coordinate System
+
+- (0,0) is the top-left corner of the grid
+- x-coordinates increase horizontally (left to right)
+- y-coordinates increase vertically (top to bottom)
+- Any position without a specified character is filled with a space
+
+## Example
+
+For a document defining character positions that form the letter 'F':
+```
+x-coordinate Character y-coordinate
+0           █         0
+0           █         1
+0           █         2
+1           ▀         1
+1           ▀         2
+2           ▀         1
+2           ▀         2
+3           ▀         2
+```
+
+The output would be:
+```
+█   
+█▀▀ 
+█▀▀▀
+``` 

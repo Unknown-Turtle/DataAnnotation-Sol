@@ -2,11 +2,6 @@
 
 This project provides a solution for reading coordinate-based character data from a Google Doc and displaying it as a grid. When displayed in a fixed-width font, the characters form a graphic showing uppercase letters, which is the secret message.
 
-## Project Structure
-
-- `message_decoder.py` - Main script that retrieves and parses data from a Google Doc URL, and prints the resulting grid of characters
-- `requirements.txt` - Lists the required Python packages
-- `.gitignore` - Specifies files and directories to be ignored by Git
 
 ## Setup
 
